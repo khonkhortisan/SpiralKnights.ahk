@@ -1,4 +1,3 @@
-#IfWinActive Spiral Knights
 ; File: Documents/AutoHotkey.ahk
 ; Optimized for gunner with maskeraith farming Black Kats
 
@@ -14,21 +13,29 @@
 	spritetype	="Maskeraith"
 ;	spritetype	="Seraphynx"
 ;	spritetype	="Drakon"
-	spritetimeout	="2500"
+	spritetimeout	=2500
 	clickspeed	=100
 	spamdelay	=100
 	stealthlastsfor	=16000
-	togglescript	={F12}
+	togglescript	=F12
 
-;Replace all occurrances of the key if you wish to remap this script
+;--- variables as hotkeys, enable only in window ---;
+
+;using variables as hotkeys requires Hotkey. #IfWinActive breaks Hotkey.
+;Hotkey, $%dash%, dashlabel
+Hotkey, ~%attack%, attacklabel
+Hotkey, ~%attack% up, attackuplabel
+Hotkey, ~%defend%, defendlabel
+Hotkey, ~%defend% up, defenduplabel
+Hotkey, ~%togglescript%, togglescriptlabel
+#IfWinActive Spiral Knights
 
 ;--- spam dash ---;
 
-dashing:=1
+;dashing:=1
 SetTimer, Spamdash, %spamdelay%
-;Hotkey, %dash%, hotkeydash
-;hotkeydash:
-$F7::SetTimer, Spamdash, % (dashing:=!dashing) ? %spamdelay% : "Off" ; uses ternary
+;dashlabel:
+;SetTimer, Spamdash, % (dashing:=!dashing) ? "100" : "Off" ; uses ternary
 ;return
 
 protectingstealth:=0
@@ -37,22 +44,21 @@ Spamdash:
 		Send %dash% ;always dash every 100ms
 return
 
-	;--- AoE after charge? ---;
-AoE:=0
-;~a & ~LButton::AoE:=1
-;--- poison after shot ---;
-
+;--- poison after shot, AoE after shield charge ---;
 poisoning:=0
-~LButton::
-	if GetKeyState("a") {
+AoE:=0
+;Hotkey, ~%attack%, attacklabel
+attacklabel:
+	if GetKeyState(defend, "p") {
 		AoE:=1
 	}
 	;sendInput, {click 100} ;trade large amounts of materials at once
 return
-~LButton Up::
+;Hotkey, ~%attack% up, attackuplabel
+attackuplabel:
 	poisoning:=1
-	SetTimer, poison, % (poisoning) ? "100" : "Off"
-	SetTimer, stoppoison, % (poisoning) ? "2500" : "Off"
+	SetTimer, poison, % (poisoning) ? spamdelay : "Off"
+	SetTimer, stoppoison, % (poisoning) ? spritetimeout : "Off"
 	Send %bash%
 return
 
@@ -73,12 +79,16 @@ return
 ;--- tap shield for stealth, pausing dash ---;
 
 sneaking:=0
-~a::SetTimer, stealth, % (sneaking) ? clickspeed : "Off"
-~a up::sneaking:=1
+defendlabel:
+	SetTimer, stealth, % (sneaking) ? clickspeed : "Off"
+return
+defenduplabel:
+	sneaking:=1
+return
 
 stealth:
 	SetTimer, stealth, Off
-	If not GetKeyState("a")
+	If not GetKeyState(defend)
 		protectingstealth:=1
 		Send %spritedefend%
 		SetTimer, stealthended, %stealthlastsfor%
@@ -91,7 +101,7 @@ return
 
 ;;--- disable everything ---;
 
-f12::
+togglescriptlabel:
 
 Suspend
 
