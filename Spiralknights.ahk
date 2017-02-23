@@ -1,5 +1,6 @@
 ; File: Documents/AutoHotkey.ahk
 ; Optimized for gunner with maskeraith farming Black Kats
+; Written using Elastic Tabstops (for Notepad++)
 
 ;Set your controls here and ingame to match. Use non-letter keys so it doesn't interfere with typing.
 
