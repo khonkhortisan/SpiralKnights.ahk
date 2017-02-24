@@ -3,22 +3,8 @@
 ; Written using Elastic Tabstops (for Notepad++)
 
 ;Set your controls here and ingame to match. Use non-letter keys so it doesn't interfere with typing.
-
-	attack	=LButton
-	spriteattack	={F2}
-	spritedefend	={F3}
-	spritespecial	={F4}
-	defend	=a
-	dash	={F6}
-	bash	={F7}
-	spritetype	="Maskeraith"
-;	spritetype	="Seraphynx"
-;	spritetype	="Drakon"
-	spritetimeout	=2500
-	clickspeed	=100
-	spamdelay	=100
-	stealthlastsfor	=16000
-	togglescript	=F9
+#include readini.ahk
+readini(SpiralKnights.ini)
 
 ;--- variables as hotkeys, enable only in window ---;
 
