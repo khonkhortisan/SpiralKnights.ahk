@@ -5,12 +5,12 @@
 ;Set your controls here and ingame to match. Use non-letter keys so it doesn't interfere with typing.
 
 	attack	=LButton
-	defend	=a
-	dash	={F7}
-	bash	={F10}
-	spriteattack	={F9}
+	spriteattack	={F2}
 	spritedefend	={F3}
 	spritespecial	={F4}
+	defend	=a
+	dash	={F6}
+	bash	={F7}
 	spritetype	="Maskeraith"
 ;	spritetype	="Seraphynx"
 ;	spritetype	="Drakon"
@@ -18,7 +18,7 @@
 	clickspeed	=100
 	spamdelay	=100
 	stealthlastsfor	=16000
-	togglescript	=F12
+	togglescript	=F9
 
 ;--- variables as hotkeys, enable only in window ---;
 
