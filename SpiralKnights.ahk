@@ -131,13 +131,3 @@ stealthended:
 	protectingstealth:=0
 	SetTimer, stealthended, Off
 return
-
-;;--- disable everything ---;
-
-togglescriptlabel:
-
-Suspend
-
-Pause,,1
-
-return
