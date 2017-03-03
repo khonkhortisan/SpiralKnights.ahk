@@ -54,13 +54,10 @@ Hotkey, ~%attack%, attacklabel
 Hotkey, ~%attack% up, attackuplabel
 Hotkey, ~%defend%, defendlabel
 Hotkey, ~%defend% up, defenduplabel
-Hotkey, ~%togglescript%, togglescriptlabel
 
 
 
 
-
-#IfWinActive Spiral Knights
 
 ;--- spam dash ---;
 
@@ -72,35 +69,45 @@ SetTimer, Spamdash, %spamdelay%
 
 protectingstealth:=0
 Spamdash:
+IfWinActive, Spiral Knights
+{
 	if not protectingstealth
 		if GetKeyState(north) or GetKeyState(south) or GetKeyState(west) or GetKeyState(east)
 			Send %dash% ;always dash every 100ms
+}
 return
 
 ;--- poison after shot, AoE after shield charge ---;
 poisoning:=0
 AoE:=0
-;Hotkey, ~%attack%, attacklabel
 attacklabel:
+IfWinActive, Spiral Knights
+{
 	if GetKeyState(defend, "p") {
 		AoE:=1
 	}
 	;sendInput, {click 100} ;trade large amounts of materials at once
+}
 return
-;Hotkey, ~%attack% up, attackuplabel
 attackuplabel:
+IfWinActive, Spiral Knights
+{
 	poisoning:=1
 	SetTimer, poison, % (poisoning) ? spamdelay : "Off"
 	SetTimer, stoppoison, % (poisoning) ? spritetimeout : "Off"
 	Send %bash%
+}
 return
 
 poison:
+IfWinActive, Spiral Knights
+{
 	if AoE {
 		Send %spritespecial%
 	} else {
 		Send %spriteattack%
 	}
+}
 return
 stoppoison:
 	poisoning:=0
@@ -113,18 +120,27 @@ return
 
 sneaking:=0
 defendlabel:
+IfWinActive, Spiral Knights
+{
 	SetTimer, stealth, % (sneaking) ? clickspeed : "Off"
+}
 return
 defenduplabel:
+IfWinActive, Spiral Knights
+{
 	sneaking:=1
+}
 return
 
 stealth:
 	SetTimer, stealth, Off
+IfWinActive, Spiral Knights
+{
 	If not GetKeyState(defend)
 		protectingstealth:=1
 		Send %spritedefend%
 		SetTimer, stealthended, %stealthlastsfor%
+}
 return
 
 stealthended:
