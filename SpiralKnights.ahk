@@ -1,10 +1,50 @@
-; File: Documents/AutoHotkey.ahk
+; Add the line #include Github/SpiralKnights.ahk/SpiralKnights.ahk to the file ~/Documents/AutoHotkey.ahk
+; Set your controls in SpiralKnights.ini and ingame to match. Use non-letter keys so it doesn't interfere with typing.
+; Change this path if it's incorrect.
+settingsfile=GitHub/SpiralKnights.ahk/SpiralKnights.ini
+
 ; Optimized for gunner with maskeraith farming Black Kats
 ; Written using Elastic Tabstops (for Notepad++)
 
-;Set your controls here and ingame to match. Use non-letter keys so it doesn't interfere with typing.
-#include readini.ahk
-readini(SpiralKnights.ini)
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;#include ReadIni.ahk                                    ;
+;doesn't work if this file is also included              ;
+;even using %A_ScriptDir%, so merged.                    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ReadIni( filename = 0 )
+; Read a whole .ini file and creates variables like this:
+; %Section%%Key% = %value%
+{
+Local s, c, p, key, k
+
+	if not filename
+		filename := SubStr( A_ScriptName, 1, -3 ) . "ini"
+
+	FileRead, s, %filename%
+
+	Loop, Parse, s, `n`r, %A_Space%%A_Tab%
+	{
+		c := SubStr(A_LoopField, 1, 1)
+		if (c="[")
+			key := SubStr(A_LoopField, 2, -1)
+		else if (c=";")
+			continue
+		else {
+			p := InStr(A_LoopField, "=")
+			if p {
+				k := SubStr(A_LoopField, 1, p-1)
+				%key%%k% := SubStr(A_LoopField, p+1)
+			}
+		}
+	}
+}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+readini(settingsfile)                                    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;--- variables as hotkeys, enable only in window ---;
 
@@ -15,6 +55,11 @@ Hotkey, ~%attack% up, attackuplabel
 Hotkey, ~%defend%, defendlabel
 Hotkey, ~%defend% up, defenduplabel
 Hotkey, ~%togglescript%, togglescriptlabel
+
+
+
+
+
 #IfWinActive Spiral Knights
 
 ;--- spam dash ---;
