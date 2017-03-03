@@ -73,7 +73,8 @@ SetTimer, Spamdash, %spamdelay%
 protectingstealth:=0
 Spamdash:
 	if not protectingstealth
-		Send %dash% ;always dash every 100ms
+		if GetKeyState(north) or GetKeyState(south) or GetKeyState(west) or GetKeyState(east)
+			Send %dash% ;always dash every 100ms
 return
 
 ;--- poison after shot, AoE after shield charge ---;
