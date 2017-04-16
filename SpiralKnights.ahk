@@ -4,9 +4,14 @@
 settingsfile=GitHub/SpiralKnights.ahk/SpiralKnights.ini
 
 ; Optimized for gunner with maskeraith farming Black Kats
-; Written using Elastic Tabstops (for Notepad++)
-
-
+; Written using Elastic Tabstops (for Notepad++) (for Sublime Text)
+; Features:
+;	Always Run
+;	Bashtackstic
+;	Domestication
+;	Stealth Defense
+;	All Around Attack
+;	Inventory Cleaner
 
 
 
